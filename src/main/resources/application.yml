@@ -1,0 +1,16 @@
+server:
+  port: ${APP_PORT}
+
+spring:
+  application:
+    name: ${APP_NAME}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?currentSchema=${REQUEST_DATABASE_SCHEMA}&ApplicationName=${APP_NAME}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yml
+    default-schema: ${REQUEST_DATABASE_SCHEMA}
