@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/changeset/2025/08/07/create-table-notification-outbox.sql

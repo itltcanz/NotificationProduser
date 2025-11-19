@@ -1,16 +1,40 @@
 server:
-  port: ${APP_PORT}
+  port: ${APP_PRODUCER_PORT}
+
+logging:
+  level:
+    org.apache.kafka: WARN
 
 spring:
+  config:
+    import: file:.env[.properties]
+
   application:
-    name: ${APP_NAME}
+    name: ${APP_PRODUCER_NAME}
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?currentSchema=${REQUEST_DATABASE_SCHEMA}&ApplicationName=${APP_NAME}
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?currentSchema=${DATABASE_PRODUCER_SCHEMA}&ApplicationName=${APP_PRODUCER_NAME}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.yml
-    default-schema: ${REQUEST_DATABASE_SCHEMA}
+    change-log: classpath:/db/changelog/changelog-master.yml
+    default-schema: ${DATABASE_PRODUCER_SCHEMA}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    topic: ${KAFKA_TOPIC_NAME}
+
+outbox:
+  batch-size: 50
+  batch-sort-field: createdAt
+  delay-ms: 1000

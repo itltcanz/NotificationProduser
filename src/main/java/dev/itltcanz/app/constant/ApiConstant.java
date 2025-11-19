@@ -1,8 +1,10 @@
 package dev.itltcanz.app.constant;
 
-public final class ApiConstant {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-  private ApiConstant() {}
+@NoArgsConstructor(access = AccessLevel.NONE)
+public final class ApiConstant {
 
   public static final String NOTIFICATION_URL = "/v1/notifications";
 }

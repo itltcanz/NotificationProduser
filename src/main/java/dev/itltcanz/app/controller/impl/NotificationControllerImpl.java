@@ -3,7 +3,7 @@ package dev.itltcanz.app.controller.impl;
 import dev.itltcanz.app.controller.doc.NotificationController;
 import dev.itltcanz.app.model.request.CreateNotificationRequest;
 import dev.itltcanz.app.model.response.CreateNotificationResponse;
-import dev.itltcanz.app.service.impl.NotificationService;
+import dev.itltcanz.app.service.impl.NotificationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,11 +12,10 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class NotificationControllerImpl implements NotificationController {
 
-  private final NotificationService notificationService;
-
+  private final NotificationServiceImpl notificationServiceImpl;
   @Override
   public ResponseEntity<CreateNotificationResponse> createNotification(CreateNotificationRequest request) {
-    CreateNotificationResponse response = notificationService.createNotification(request);
+    CreateNotificationResponse response = notificationServiceImpl.createNotification(request);
     return ResponseEntity.ok(response);
   }
 }
